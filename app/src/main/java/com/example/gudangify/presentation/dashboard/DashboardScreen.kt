@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +42,7 @@ import com.example.gudangify.R
 fun DashboardScreen(modifier: Modifier = Modifier, navController: NavController) {
     val viewModel = viewModel<DashboardViewModel>()
     val context = LocalContext.current
+    val barang = viewModel.barang.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.init(context)
@@ -91,7 +93,7 @@ fun DashboardScreen(modifier: Modifier = Modifier, navController: NavController)
                         color = Color.White
                     )
 
-                    viewModel.barang.forEach { item ->
+                    barang.value.forEach { item ->
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -124,7 +126,9 @@ fun DashboardScreen(modifier: Modifier = Modifier, navController: NavController)
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 40.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -133,7 +137,7 @@ fun DashboardScreen(modifier: Modifier = Modifier, navController: NavController)
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.itemCount.value.toString(),
+                        text = barang.value.size.toString(),
                         color = MainColor.Main,
                         fontSize = 36.sp,
                         fontWeight = FontWeight.Bold
@@ -160,7 +164,7 @@ fun DashboardScreen(modifier: Modifier = Modifier, navController: NavController)
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.quantityCount.value.toString(),
+                        text = barang.value.sumOf { it.quantity }.toString(),
                         color = MainColor.Main,
                         fontSize = 36.sp,
                         fontWeight = FontWeight.Bold

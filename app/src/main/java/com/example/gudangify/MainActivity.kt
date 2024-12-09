@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gudangify.presentation.add.AddScreen
 import com.example.gudangify.presentation.dashboard.DashboardScreen
 import com.example.gudangify.presentation.list.ListScreen
 import com.example.gudangify.presentation.onboard.OnboardScreen
@@ -41,12 +40,6 @@ import com.example.gudangify.ui.theme.GudangifyTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(
-            navigationBarStyle = SystemBarStyle.light(
-                Color.Black.toArgb(),
-                Color.Black.toArgb()
-            )
-        )
         setContent {
             val navController = rememberNavController()
             val currentRoute = remember {
@@ -153,10 +146,6 @@ class MainActivity : ComponentActivity() {
 
                         composable("dashboard") {
                             DashboardScreen(navController = navController)
-                        }
-
-                        composable("add") {
-                            AddScreen(navController = navController)
                         }
                     }
                 }

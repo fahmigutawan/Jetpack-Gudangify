@@ -23,7 +23,7 @@ class Repository constructor(context: Context) {
 
     suspend fun deleteAll() = room.deleteAll()
 
-    suspend fun getAll(): List<BarangEntity> = room.getAll()
+    fun getAll() = room.getAll()
 
     suspend fun updateQuantity(id: Int, quantity: Int) = room.updateQuantity(id, quantity)
 }

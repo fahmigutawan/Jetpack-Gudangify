@@ -7,13 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gudangify.data.Repository
 import com.example.gudangify.model.BarangEntity
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
     private lateinit var repo: Repository
-    val barang = mutableStateListOf<BarangEntity>()
-    val itemCount = derivedStateOf { barang.size }
-    val quantityCount = derivedStateOf { barang.sumOf { it.quantity } }
+    val barang = MutableStateFlow<List<BarangEntity>>(emptyList())
 
     fun init(context: Context) {
         if (!this::repo.isInitialized) repo = Repository(context)
@@ -21,8 +20,9 @@ class DashboardViewModel : ViewModel() {
 
     fun getAllBarang() {
         viewModelScope.launch {
-            barang.clear()
-            barang.addAll(repo.getAll())
+            repo.getAll().collect{
+                barang.value = it
+            }
         }
     }
 }

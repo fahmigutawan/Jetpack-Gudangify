@@ -40,7 +40,7 @@ class RoomDatabaseHandler {
         barangDao.deleteAll()
     }
 
-    suspend fun getAll(): List<BarangEntity> = barangDao.getAll()
+    fun getAll() = barangDao.getAll()
 
     suspend fun updateQuantity(id: Int, quantity: Int) {
         barangDao.updateQuantity(id, quantity)
